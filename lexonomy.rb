@@ -105,6 +105,7 @@ class Lexonomy < Formula
   def install
     system "make", "build"
     
+    inreplace "website/siteconfig.json.template", /"dataDir": ".*"/, "\"dataDir\": \"#{var}/lexonomy/\""
     (etc/"lexonomy").install "website/siteconfig.json.template" => "siteconfig.json"
     (prefix/"website").install_symlink etc/"lexonomy/siteconfig.json"
     (prefix/"website").install "website/config.js.template" => "config.js"
@@ -121,6 +122,17 @@ class Lexonomy < Formula
       exec "/opt/homebrew/Cellar/lexonomy/4.3/libexec/bin/python" "lexonomy.py" 
     EOS
 
+    bin.write_exec_script prefix/"website/adminscripts/init.py"
+    mv bin/"init.py", bin/"lexonomy-init"
+    (bin/"lexonomy-init").atomic_write <<~EOS
+      #!/bin/sh
+      cd /opt/homebrew/Cellar/lexonomy/4.3/website/
+      exec "/opt/homebrew/Cellar/lexonomy/4.3/libexec/bin/python" "adminscripts/init.py"
+    EOS
+  end
+
+  def post_install
+    (var/"lexonomy").mkpath
   end
 
   test do
