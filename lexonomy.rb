@@ -135,6 +135,16 @@ class Lexonomy < Formula
     (var/"lexonomy").mkpath
   end
 
+  def caveats
+    <<~EOS
+      To initialize the database, run:
+        lexonomy-init
+      
+      To start the Lexonomy server, run:
+        lexonomy
+    EOS
+  end
+
   test do
     # `test do` will create, run in and delete a temporary directory.
     #
