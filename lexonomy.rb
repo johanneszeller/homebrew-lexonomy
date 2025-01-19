@@ -112,6 +112,15 @@ class Lexonomy < Formula
     
     venv = virtualenv_create(libexec, "python3.9")
     venv.pip_install resources
+
+    bin.write_exec_script prefix/"website/lexonomy.py"
+    mv bin/"lexonomy.py", bin/"lexonomy"
+    (bin/"lexonomy").atomic_write <<~EOS
+      #!/bin/sh
+      cd /opt/homebrew/Cellar/lexonomy/4.3/website/
+      exec "/opt/homebrew/Cellar/lexonomy/4.3/libexec/bin/python" "lexonomy.py" 
+    EOS
+
   end
 
   test do
