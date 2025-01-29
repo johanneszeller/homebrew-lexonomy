@@ -129,6 +129,14 @@ class Lexonomy < Formula
       cd /opt/homebrew/Cellar/lexonomy/4.3/website/
       exec "/opt/homebrew/Cellar/lexonomy/4.3/libexec/bin/python" "adminscripts/init.py"
     EOS
+
+    bin.write_exec_script prefix/"website/adminscripts/changePassword.py"
+    mv bin/"changePassword.py", bin/"lexonomy-changePassword"
+    (bin/"lexonomy-changePassword").atomic_write <<~EOS
+      #!/bin/sh
+      cd /opt/homebrew/Cellar/lexonomy/4.3/website
+      exec "/opt/homebrew/Cellar/lexonomy/4.3/libexec/bin/python" "adminscripts/changePassword.py" "$@"
+    EOS
   end
 
   def post_install

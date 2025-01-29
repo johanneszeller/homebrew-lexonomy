@@ -25,6 +25,16 @@ lexonomy
 
 By default, the server listens on `http://localhost:8080/`.
 
+### Change password
+
+To change the password of a user run `lexonomy-changePassword <email>`. Example:
+
+```shell
+$ lexonomy-changePassword root@localhost                     
+Connected to database: /opt/homebrew/var/lexonomy/lexonomy.sqlite
+User root@localhost now has a new password: 9nmyg260
+```
+
 ## Paths
 
 The configuration files are in `$(brew --prefix)/etc/lexonomy`.
